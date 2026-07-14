@@ -161,3 +161,19 @@
 - `script.js`와 `game.js`는 `cscript.exe //nologo`로 문법 검증을 통과했다.
 - Git 저장소 메타는 현재 환경의 권한 때문에 직접 복구하지 못했다.
 - `https://idknow-kim.github.io/`에서 HTTP 200을 확인했다.
+## Change Request Intake
+
+| Item | Details |
+|---|---|
+| Last normal deployment commit | `14eb10d` |
+| Last normal deployment URL | `https://idknow-kim.github.io/` |
+| New Change Request ID | `CRQ-20260714-01` |
+| Change Item Count | 1 |
+| User Request Summary | The prompt contains placeholder text only, so the actual desired website change is not yet known. |
+| Reference Materials | None found in the project root or current prompt. |
+| Current State | `HITL_REQUIRED` |
+| New Completion Criteria | A concrete, actionable modification request from the user |
+| Loop Execution Order | 1) wait for actual request, 2) decompose into Change Items, 3) plan implementation loops |
+| Next Step 9 Loop ID | `CRL-001` |
+| Rollback Criteria | Not applicable until an implementation change exists |
+| Human Check Items | User must supply the real change request; if a CV/PDF/image/document is intended, the exact file must be identified |

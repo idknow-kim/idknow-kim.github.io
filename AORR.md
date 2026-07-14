@@ -406,3 +406,8 @@ stateDiagram-v2
 - Games 탭에 추가 기능이 필요한 경우
 - GitHub 저장소 설정을 변경해야 하는 경우
 - Claude Code CLI가 없거나 모델명이 확인되지 않는 경우
+## Change Request Loop Plan
+
+| Loop ID | Connected Change Item | Target | Input Materials | Act | Observe | Reason | Verifier | Completion Criteria | Retry Policy | Stop Conditions | HITL Conditions | Expected Files | Predecessor | Next Loop | State |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| CRL-001 | CR-001 | Collect a concrete post-deployment modification request | Deployed site baseline, `CHANGE_REQUEST.md`, `AORR.md`, `MEMORY.md` | Do not implement anything yet; preserve the baseline and record that the request is placeholder-only | Confirm that no actionable change item exists until the user provides a real request | UNKNOWN / HITL_REQUIRED | `git status`, current repo tree, deployed URL baseline, document review | A specific user request is available and can be split into actionable loops | No retry for implementation, because there is no implementation target yet | Stop and wait for user clarification | Missing request details, placeholder text only, no concrete target | `CHANGE_REQUEST.md`, `AORR.md`, `MEMORY.md` | None | Future concrete change loops after clarification | `HITL_REQUIRED` |
