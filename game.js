@@ -14,6 +14,35 @@
   var STORAGE_KEY = "idknowkim.snake.bestScore";
   var BOARD_SIZE = 20;
   var STEP_MS = 140;
+  var THEMES = [
+    {
+      background: "#20345f",
+      grid: "rgba(255,255,255,0.12)",
+      food: "#f07b45",
+      head: "#dca64a",
+      body: "#8fd08f",
+      tail: "#5fb8c1",
+      glow: "rgba(220,166,74,0.34)"
+    },
+    {
+      background: "#2c4c7d",
+      grid: "rgba(255,255,255,0.10)",
+      food: "#ff9d42",
+      head: "#f6db74",
+      body: "#6ad17c",
+      tail: "#5aa8d8",
+      glow: "rgba(53,95,156,0.34)"
+    },
+    {
+      background: "#5a3b62",
+      grid: "rgba(255,255,255,0.10)",
+      food: "#ff7d59",
+      head: "#f1c35d",
+      body: "#7fd2a6",
+      tail: "#79b2f0",
+      glow: "rgba(240,123,69,0.34)"
+    }
+  ];
   var swipeStart = null;
 
   if (!canvas || !scoreValue || !bestScoreValue || !gameState) {
@@ -36,7 +65,8 @@
     snake: [],
     food: { x: 0, y: 0 },
     accumulator: 0,
-    lastTimestamp: 0
+    lastTimestamp: 0,
+    themeIndex: 0
   };
 
   window.__snakeGameInstance = game;
@@ -49,6 +79,7 @@
   function syncStats() {
     scoreValue.textContent = String(game.score);
     bestScoreValue.textContent = String(game.bestScore);
+    game.themeIndex = Math.floor(game.score / 3) % THEMES.length;
   }
 
   function updateBestScore() {
@@ -143,6 +174,7 @@
     game.score = 0;
     game.accumulator = 0;
     game.lastTimestamp = 0;
+    game.themeIndex = 0;
     resetSnake();
     spawnFood();
     syncStats();
@@ -207,6 +239,10 @@
     ctx.fillRect(x * size + padding, y * size + padding, size - padding * 2, size - padding * 2);
   }
 
+  function currentTheme() {
+    return THEMES[game.themeIndex % THEMES.length];
+  }
+
   function overlayMessage(message) {
     var size = canvas.getBoundingClientRect().width;
     ctx.fillStyle = "rgba(0, 0, 0, 0.35)";
@@ -221,21 +257,22 @@
   function draw() {
     var size = canvas.getBoundingClientRect().width;
     var i;
+    var theme = currentTheme();
 
     ctx.clearRect(0, 0, size, size);
-    ctx.fillStyle = "#0f2f2d";
+    ctx.fillStyle = theme.background;
     ctx.fillRect(0, 0, size, size);
 
-    ctx.fillStyle = "rgba(255,255,255,0.04)";
+    ctx.fillStyle = theme.grid;
     for (i = 0; i < BOARD_SIZE; i += 1) {
       ctx.fillRect((size / BOARD_SIZE) * i, 0, 1, size);
       ctx.fillRect(0, (size / BOARD_SIZE) * i, size, 1);
     }
 
-    drawCell(game.food.x, game.food.y, "#ef6c57");
+    drawCell(game.food.x, game.food.y, theme.food);
 
     for (i = 0; i < game.snake.length; i += 1) {
-      drawCell(game.snake[i].x, game.snake[i].y, i === 0 ? "#8ce99a" : "#66d9c2");
+      drawCell(game.snake[i].x, game.snake[i].y, i === 0 ? theme.head : (i === game.snake.length - 1 ? theme.tail : theme.body));
     }
 
     if (!game.running && !game.gameOver) {
@@ -308,7 +345,13 @@
 
     if (key === " ") {
       preventScrollForControlKeys(event);
-      pauseGame();
+      if (game.gameOver) {
+        restartGame();
+      } else if (game.running) {
+        pauseGame();
+      } else {
+        startGame();
+      }
       return;
     }
 
