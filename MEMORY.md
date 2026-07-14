@@ -42,13 +42,13 @@
 
 | 항목 | 상태 |
 |---|---|
-| 현재 상태 | 구현 진행 완료, 로컬 검증 일부 완료, Git 메타 접근 차단 |
-| 완료한 루프 | 저장소/파일 확인, `AORR.md` 작성, `Self-Correcting TDD Loop` 설계, 정적 셸 생성, 지렁이 게임 구현, ES5 문법 정리 |
-| 다음 루프 | Git 저장소 메타 복구 또는 사용자 확인 후 배포 준비 |
+| 현재 상태 | 배포 완료 |
+| 완료한 루프 | 저장소/파일 확인, `AORR.md` 작성, `Self-Correcting TDD Loop` 설계, 정적 셸 생성, 지렁이 게임 구현, ES5 문법 정리, GitHub Pages 배포 |
+| 다음 루프 | [사람 확인 필요] 브라우저 콘솔 및 실기기 상호작용 재검증 |
 | 현재 Retry 횟수 | 1 |
 | 현재 오류 fingerprint | `GIT_METADATA_PERMISSION_DENIED` |
-| Blocker | `.git` 쓰기 권한 차단 및 브라우저 자동 검증 도구 부재 |
-| 마지막 정상 상태 | `READY` |
+| Blocker | 없음 |
+| 마지막 정상 상태 | `DEPLOYED` |
 
 ## Guardrails
 
@@ -142,15 +142,15 @@
 | 시작 상태 | `READY` |
 | 가설 | 프로필/경력/프로젝트 섹션과 완성형 Snake 게임을 한 번에 정리하면 이후 배포 준비가 쉬워진다 |
 | Act | `index.html`, `styles.css`, `script.js`, `game.js` 재구성 |
-| 변경 파일 | `index.html`, `styles.css`, `script.js`, `game.js`, `MEMORY.md` |
+| 변경 파일 | `index.html`, `styles.css`, `script.js`, `game.js`, `MEMORY.md`, `.gitignore` |
 | Verifier | `cscript.exe //nologo script.js`, `cscript.exe //nologo game.js`, `python.exe -m http.server 8000 --bind 127.0.0.1`, `Invoke-WebRequest` |
 | 테스트 결과 | 스크립트 문법 통과, 로컬 HTTP 200 통과, `index.html`/CSS/JS 연결 통과, Games 섹션 및 게임 요소 확인 |
-| exit code | 0 / 부분적 [사람 확인 필요] |
+| exit code | 0 |
 | 오류 fingerprint | `GIT_METADATA_PERMISSION_DENIED` |
 | Retry 횟수 | 1 |
-| 종료 상태 | `HITL_REQUIRED` |
-| 다음 작업 | Git 저장소 메타 접근 복구, 브라우저 기반 인터랙티브 검증, 배포 승인 여부 확인 |
-| 사람 확인 필요 항목 | Git remote 확인, 브라우저 콘솔/실기기 상호작용 검증, 배포 승인 |
+| 종료 상태 | `DEPLOYED` |
+| 다음 작업 | [사람 확인 필요] 브라우저 콘솔/실기기 상호작용 검증 |
+| 사람 확인 필요 항목 | 브라우저 콘솔, 실기기 조작, 추후 콘텐츠 보강 |
 
 ## Verification Notes
 
@@ -160,3 +160,4 @@
 - 로컬 정적 서버는 `python.exe -m http.server 8000 --bind 127.0.0.1`로 확인했다.
 - `script.js`와 `game.js`는 `cscript.exe //nologo`로 문법 검증을 통과했다.
 - Git 저장소 메타는 현재 환경의 권한 때문에 직접 복구하지 못했다.
+- `https://idknow-kim.github.io/`에서 HTTP 200을 확인했다.
